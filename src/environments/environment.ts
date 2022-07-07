@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrlFe: window['__env']['apiUrlFe'],
+  apiUrl: window['__env']['apiUrl'],
+  imageUrl: window['__env']['imageUrl'],
+  sso: window['__env']['sso'],
+  webPortalURL: window['__env']['webPortalURL'],
+  appCode: window['__env']['appCode'],
 };
 
 /*

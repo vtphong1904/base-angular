@@ -1,3 +1,9 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrlFe: window['__env']['apiUrlFe'],
+  apiUrl: window['__env']['apiUrl'],
+  imageUrl: window['__env']['imageUrl'],
+  sso: window['__env']['sso'],
+  webPortalURL: window['__env']['webPortalURL'],
+  appCode: window['__env']['appCode'],
 };
