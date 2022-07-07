@@ -1,9 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import {BaseComponent} from './base.component';
+import {AuthModule} from "./auth/auth.module";
 
 @NgModule({
     declarations: [BaseComponent],
     imports: [
+      AuthModule
     ]
 })
 export class CoreModule
