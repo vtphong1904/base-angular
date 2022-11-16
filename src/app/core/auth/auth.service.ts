@@ -7,4 +7,15 @@ import {HttpClient} from "@angular/common/http";
 export class AuthService {
 
   constructor(private _httpClient: HttpClient) { }
+
+  // Lưu token vào localStorage
+  set accessToken(token: string)
+    {
+        localStorage.setItem('accessToken', token);
+    }
+
+    get accessToken(): string
+    {
+        return localStorage.getItem('accessToken') ?? '';
+    }
 }

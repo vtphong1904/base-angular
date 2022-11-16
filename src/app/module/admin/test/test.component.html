@@ -1,0 +1,9 @@
+<app-data-table
+  [rows]="dataTable | slice: paginate.size * paginate.page : paginate.size * (paginate.page + 1)"
+  [columns]="columns"
+  [paginate]="true"
+  [limit]="paginate.size"
+  [count]="dataTable.length"
+  (action)="actionClick($event)"
+  (pageChange)="changePage($event)">
+</app-data-table>
