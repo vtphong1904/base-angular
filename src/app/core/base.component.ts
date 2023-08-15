@@ -3,7 +3,7 @@ import {FormBuilder} from '@angular/forms';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {BaseService} from "./base.service";
-import {take} from "rxjs";
+import {Subject, Subscription, take} from "rxjs";
 
 @Component({
   selector: 'app-base',
@@ -11,11 +11,12 @@ import {take} from "rxjs";
   styles: []
 })
 export class BaseComponent {
-  // write common method
   public fb: FormBuilder;
   public snackBar: MatSnackBar;
   public dialogService: MatDialog;
   public dataResponse: any;
+  public _destroy$ = new Subject();
+  public _subscriptionAll$ = new Subscription();
 
   constructor(injector: Injector, private baseService?: BaseService) {
     this.fb = injector.get(FormBuilder);

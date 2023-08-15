@@ -28,6 +28,7 @@ export class HasAnyAuthorityDirective implements OnDestroy {
 
   private updateView(): void {
     // const hasAnyAuthority = this.accountService.hasAnyAuthority(this.authorities);
+    /*Kiểm tra quyền được truyền vào từ directive có trong danh sách quyền của tài khoản đăng nhập hay không*/
     const hasAnyAuthority = '';
     this.viewContainerRef.clear();
     if (hasAnyAuthority) {

@@ -1,6 +1,7 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {BaseComponent} from "../../../core/base.component";
 import {TestService} from "./test.service";
+import {IColumnTable, IPagination} from "../../../shared/components/data-table/data-table.component";
 
 @Component({
   selector: 'app-test',
@@ -8,12 +9,13 @@ import {TestService} from "./test.service";
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent extends BaseComponent implements OnInit {
-  paginate = {
+  pagination: IPagination = {
     page: 0,
     size: 5,
-    total: 0
+    total: 0,
+    isShow: true
   }
-  columns: any[] = [
+  columns: IColumnTable[] = [
     {
       columnDef: 'stt',
       header: 'STT',
@@ -31,49 +33,8 @@ export class TestComponent extends BaseComponent implements OnInit {
     {
       columnDef: 'action',
       header: 'Hành động',
+      flex: 0.5,
       actions: ['view','edit', 'delete'],
-    }
-  ];
-  dataTable = [
-    {
-      name: 'ABC',
-      code: 'abc'
-    },
-    {
-      name: 'ABC',
-      code: 'abc'
-    },
-    {
-      name: 'ABC',
-      code: 'abc'
-    },
-    {
-      name: 'ABC',
-      code: 'abc'
-    },
-    {
-      name: 'ABC',
-      code: 'abc'
-    },
-    {
-      name: 'MNP',
-      code: 'mnp'
-    },
-    {
-      name: 'MNP',
-      code: 'mnp'
-    },
-    {
-      name: 'MNP',
-      code: 'mnp'
-    },
-    {
-      name: 'MNP',
-      code: 'mnp'
-    },
-    {
-      name: 'MNP',
-      code: 'mnp'
     }
   ];
   constructor(injector: Injector, private testService: TestService) {
@@ -82,15 +43,19 @@ export class TestComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
-    console.log(this.dataResponse)
   }
 
   changePage(e: any) {
-   this.paginate.page = e.pageIndex;
-   this.paginate.size = e.pageSize;
+   this.pagination.page = e.pageIndex;
+   this.pagination.size = e.pageSize;
   }
 
-  actionClick(e: any) {
-    console.log(e)
+
+  addOrEdit(row: any): void {
+    console.log(row)
+  }
+
+  delete(row: any): void {
+    console.log(row)
   }
 }

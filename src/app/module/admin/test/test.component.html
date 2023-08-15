@@ -1,9 +1,20 @@
 <app-data-table
-  [rows]="dataTable | slice: paginate.size * paginate.page : paginate.size * (paginate.page + 1)"
+  [rows]="dataResponse | slice: pagination.size * pagination.page : pagination.size * (pagination.page + 1)"
   [columns]="columns"
-  [paginate]="true"
-  [limit]="paginate.size"
-  [count]="dataTable.length"
-  (action)="actionClick($event)"
+  [pagination]="pagination"
+  [rowTemplate]="rowTemplate"
   (pageChange)="changePage($event)">
+  <ng-template #rowTemplate let-row="row" let-column="column">
+    <ng-container [ngSwitch]="column.columnDef">
+      <ng-container *ngSwitchCase="'action'">
+        <button mat-stroked-button color="primary" (click)="addOrEdit(row)">Edit</button>
+        <button mat-stroked-button color="warn" class="!ml-2" (click)="delete(row)">Delete</button>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <div [innerHTML]="column.cellRenderer ? column.cellRenderer(row) : row[column.columnDef]"
+             class="whitespace-nowrap truncate">
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-template>
 </app-data-table>
