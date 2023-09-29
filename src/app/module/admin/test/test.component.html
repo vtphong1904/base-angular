@@ -1,5 +1,5 @@
 <app-data-table
-  [rows]="dataResponse | slice: pagination.size * pagination.page : pagination.size * (pagination.page + 1)"
+  [rows]="listItem | slice: pagination.size * pagination.page : pagination.size * (pagination.page + 1)"
   [columns]="columns"
   [pagination]="pagination"
   [rowTemplate]="rowTemplate"

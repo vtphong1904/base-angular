@@ -1,7 +1,8 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {BaseComponent} from "../../../core/base.component";
-import {TestService} from "./test.service";
-import {IColumnTable, IPagination} from "../../../shared/components/data-table/data-table.component";
+import {IColumnTable, IPagination} from '@shared/components/data-table/data-table.component';
+import {BaseComponent} from '@app/core/base.component';
+import {TestService} from '@app/module/admin/test/test.service';
+
 
 @Component({
   selector: 'app-test',
@@ -42,6 +43,9 @@ export class TestComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.testService.getContentTest().subscribe(res => {
+      console.log(res);
+    })
     this.getAll();
   }
 

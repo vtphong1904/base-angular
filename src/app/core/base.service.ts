@@ -8,18 +8,17 @@ import {environment} from "../../environments/environment";
 })
 export class BaseService {
   public apiUrl: string = environment.apiUrl;
-  public suffixes: string;
   constructor(public http: HttpClient) {
   }
 
-  getAll(p?: any): Observable<any>{
-    return of({suffixes: this.suffixes, body: fakeData});
+  getListItem(p?: any): Observable<any>{
+    return of({apiUrl: this.apiUrl, body: fakeData});
   }
   updateItem(p?: any):Observable<any>{
     return of(p);
   }
 
-  delete(id: any): Observable<any>{
+  deleteItem(id: any): Observable<any>{
     return of(id)
   }
 

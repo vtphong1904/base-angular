@@ -1,9 +1,10 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {BaseService} from "./base.service";
-import {Subject, Subscription, take} from "rxjs";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {Subject, Subscription, take} from 'rxjs';
+import {BaseService} from '@app/core/base.service';
+
 
 @Component({
   selector: 'app-base',
@@ -14,7 +15,8 @@ export class BaseComponent {
   public fb: FormBuilder;
   public snackBar: MatSnackBar;
   public dialogService: MatDialog;
-  public dataResponse: any;
+  public listItem: any;
+
   public _destroy$ = new Subject();
   public _subscriptionAll$ = new Subscription();
 
@@ -35,14 +37,15 @@ export class BaseComponent {
       width: '30vw',
       ...options
     });
-    ref.afterClosed().pipe(take(1)).subscribe(value => {
+    ref.afterClosed().pipe(take(1)).subscribe((value: any) => {
       callback && callback(value);
     });
   }
 
   getAll(){
-    this.baseService?.getAll().subscribe(res => {
-      this.dataResponse = res.body;
+    this.baseService?.getListItem().subscribe(res => {
+      console.log('res', res)
+      this.listItem = res.body;
     })
   }
 }
