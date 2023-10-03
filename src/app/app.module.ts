@@ -7,11 +7,13 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { TestComponent } from './module/admin/test/test.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddOrEditComponent } from './module/admin/test/add-or-edit/add-or-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    TestComponent,
+    AddOrEditComponent
   ],
   imports: [
     BrowserModule,

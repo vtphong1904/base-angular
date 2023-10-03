@@ -2,6 +2,8 @@ import {Component, Injector, OnInit} from '@angular/core';
 import {IColumnTable, IPagination} from '@shared/components/data-table/data-table.component';
 import {BaseComponent} from '@app/core/base.component';
 import {TestService} from '@app/module/admin/test/test.service';
+import {ConfirmDialogComponent} from '@shared/components/confirm-dialog/confirm-dialog.component';
+import {AddOrEditComponent} from '@app/module/admin/test/add-or-edit/add-or-edit.component';
 
 
 @Component({
@@ -56,10 +58,20 @@ export class TestComponent extends BaseComponent implements OnInit {
 
 
   addOrEdit(row: any): void {
-    console.log(row)
+    console.log(row);
+    this.showDialog(AddOrEditComponent, {}, (value: any) => {
+      if(value){
+        this.getAll();
+      }
+    })
   }
 
   delete(row: any): void {
-    console.log(row)
+    console.log(row);
+    this.showDialog(ConfirmDialogComponent, {}, (value: any) => {
+      if(value){
+        this.getAll();
+      }
+    })
   }
 }

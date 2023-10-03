@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, of} from "rxjs";
+import {delay, Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -12,18 +12,26 @@ export class BaseService {
   }
 
   getListItem(p?: any): Observable<any>{
-    return of({apiUrl: this.apiUrl, body: fakeData});
+    return of({
+      code: '00',
+      data: fakeData,
+      apiUrl: this.apiUrl
+    })
   }
   updateItem(p?: any):Observable<any>{
     return of(p);
+  }
+
+  addNewItem(p?: any): Observable<any>{
+    return of(p).pipe(delay(2000))
   }
 
   deleteItem(id: any): Observable<any>{
     return of(id)
   }
 
-  getDetail(id: any): Observable<any>{
-    return of('Detail '+id);
+  getItemById(id: any): Observable<any>{
+    return of(id);
   }
 }
 

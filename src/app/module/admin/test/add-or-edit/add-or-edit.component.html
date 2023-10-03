@@ -1,0 +1,13 @@
+<p>add-or-edit works!</p>
+<div class="form" [formGroup]="formModel">
+  <div class="control">
+    <label>name</label>
+    <input type="text" formControlName="name"/>
+  </div>
+  <div class="control">
+    <label>age</label>
+    <input type="text" formControlName="age"/>
+  </div>
+</div>
+<button mat-stroked-button color="warn" (click)="save$.next(formModel.getRawValue())">Add</button>
+

@@ -15,6 +15,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDialogModule} from "@angular/material/dialog";
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { OnlyNumberDirective } from './directives/only-number.directive';
 
 export const MatModules = [
   MatPaginatorModule,
@@ -40,6 +41,7 @@ export const directives = [
       ...directives,
     DataTableComponent,
     ConfirmDialogComponent,
+    OnlyNumberDirective,
   ],
   exports: [
     CommonModule,
