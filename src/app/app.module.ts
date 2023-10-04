@@ -12,8 +12,6 @@ import { AddOrEditComponent } from './module/admin/test/add-or-edit/add-or-edit.
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent,
-    AddOrEditComponent
   ],
   imports: [
     BrowserModule,

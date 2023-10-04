@@ -11,49 +11,75 @@ export class BaseService {
   constructor(public http: HttpClient) {
   }
 
-  getListItem(p?: any): Observable<any>{
+  getListItem(params?: any): Observable<any>{
     return of({
       code: '00',
       data: fakeData,
       apiUrl: this.apiUrl
     })
   }
-  updateItem(p?: any):Observable<any>{
-    return of(p);
+  updateItem(item?: any):Observable<any>{
+    return of(randomResponse(item)).pipe(delay(800));
   }
 
-  addNewItem(p?: any): Observable<any>{
-    return of(p).pipe(delay(2000))
+  addItem(item?: any): Observable<any>{
+    return of(randomResponse(item)).pipe(delay(800));
   }
 
-  deleteItem(id: any): Observable<any>{
-    return of(id)
+  deleteItem(id?: any): Observable<any>{
+    return of(randomResponse(id))
   }
 
-  getItemById(id: any): Observable<any>{
-    return of(id);
+  getItemById(id?: any): Observable<any>{
+    const temp = fakeData.filter(item => item.id === id);
+    if(temp?.length > 0){
+      return of({
+        code: '00',
+        data: temp[0]
+      });
+    }else{
+      return of({
+        code: 'E05',
+        message: 'Item không tồn tại'
+      });
+    }
   }
+}
+
+export const randomResponse = (item?: any) => {
+  const randomNumber = Math.floor(Math.random() * 2) + 1;
+  const arr = [
+    {
+      code: '00',
+      data: item || [],
+    },
+    {
+      code: 'E05',
+      message: 'Có lỗi xảy ra'
+    }
+  ];
+  return arr[randomNumber];
 }
 
 export const fakeData = [
   {
     id: 1,
-    name: 'Xie',
-    code: 'Chuling'
+    name: 'Stephen Curry',
+    code: 'The Chef'
   },
   {
     id: 2,
-    name: 'Justina',
-    code: 'Xie'
+    name: 'Kevin Durant',
+    code: 'Snake'
   },
   {
     id: 3,
-    name: 'Phong',
-    code: 'Vutu'
+    name: 'Lebron James',
+    code: 'The King'
   },
   {
     id: 4,
-    name: 'Xie',
-    code: 'Feng'
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
   }
 ]

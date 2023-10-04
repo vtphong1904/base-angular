@@ -1,12 +1,13 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import {BaseComponent} from './base.component';
 import {AuthModule} from "./auth/auth.module";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {IconsModule} from '@app/core/icons/icons.module';
 
 @NgModule({
     declarations: [BaseComponent],
     imports: [
       AuthModule,
+      IconsModule
     ]
 })
 export class CoreModule

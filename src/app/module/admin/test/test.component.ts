@@ -1,9 +1,9 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {IColumnTable, IPagination} from '@shared/components/data-table/data-table.component';
 import {BaseComponent} from '@app/core/base.component';
-import {TestService} from '@app/module/admin/test/test.service';
 import {ConfirmDialogComponent} from '@shared/components/confirm-dialog/confirm-dialog.component';
 import {AddOrEditComponent} from '@app/module/admin/test/add-or-edit/add-or-edit.component';
+import {TestService} from '@shared/services/test.service';
 
 
 @Component({

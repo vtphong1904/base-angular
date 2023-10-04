@@ -7,10 +7,13 @@ import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog
 import {catchError, of, Subject, Subscription, switchMap, take, takeUntil} from 'rxjs';
 import {BaseService} from '@app/core/base.service';
 import {
+  ADD_ITEM_SUCCESS,
+  DELETE_ITEM_SUCCESS,
+  MESSAGE_ERROR_DEFAULT,
   RESPONSE_CODE_SUCCESS,
   SNACKBAR_DANGER,
   SNACKBAR_SUCCESS,
-  SNACKBAR_WARNING
+  SNACKBAR_WARNING, UPDATE_ITEM_SUCCESS
 } from '@shared/constants/app.constant';
 
 
@@ -47,8 +50,92 @@ export class BaseComponent {
     // this.formModel = this.fb.group({});
   }
 
+  addNewItem(item?: any){
+    this?.baseService?.addItem(item).pipe(takeUntil(this._destroy$)).subscribe((res) => {
+      if(res.code === RESPONSE_CODE_SUCCESS){
+        console.log('Add success', res);
+        this.showSnackBar(ADD_ITEM_SUCCESS, SNACKBAR_SUCCESS);
+        this.dialogRef?.close('reload');
+      }else{
+        console.log('Add fail', res);
+        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)
+      }
+    })
+  }
+
+  asyncAddNewItem(){
+    this.save$.pipe(
+      // @ts-ignore
+      switchMap((obj: any) => {
+        return this.baseService?.addItem(obj).pipe(catchError(err => of(null)));
+      }),
+      takeUntil(this._destroy$),
+      catchError(err => of(null))
+    ).subscribe(res => {
+      if(res.code === RESPONSE_CODE_SUCCESS){
+        console.log('Add success', res);
+        this.showSnackBar(ADD_ITEM_SUCCESS, SNACKBAR_SUCCESS);
+        this.dialogRef?.close('reload');
+      }else{
+        console.log('Add fail', res);
+        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)
+      }
+    })
+  }
+  getAll() {
+    this.baseService?.getListItem().pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
+      if(res.code === RESPONSE_CODE_SUCCESS){
+        console.log('List item', res);
+        this.listItem = res.data;
+      }else{
+        console.log('Get list fail', res);
+        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER);
+      }
+    })
+  }
+
+  getDetailById(id?: any, callback?: any) {
+    this.baseService?.getItemById(id).pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
+      if(res.code === RESPONSE_CODE_SUCCESS){
+        console.log('Detail item', res);
+        this.itemDetail = res.data;
+        this.formModel?.patchValue(callback ? callback(this.itemDetail) : this.itemDetail);
+      }else{
+        console.log('Detail', res);
+        this.showSnackBar(res.message, SNACKBAR_DANGER)
+      }
+    })
+  }
+
+  editItem(item?: any){
+    this.baseService?.updateItem(item).pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
+      if(res.code === RESPONSE_CODE_SUCCESS){
+        console.log('Update success', res)
+        this.showSnackBar(UPDATE_ITEM_SUCCESS, SNACKBAR_SUCCESS);
+      }else {
+        console.log('Update fail', res)
+        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER);
+      }
+    })
+  }
+
+  deleteItem(id?: any){
+    this.baseService?.deleteItem(id).pipe(takeUntil(this._destroy$)).subscribe((res) => {
+      if(res.code === RESPONSE_CODE_SUCCESS){
+        console.log('Delete success', res);
+        this.showSnackBar(DELETE_ITEM_SUCCESS, SNACKBAR_SUCCESS);
+      }else{
+        console.log('Delete fail', res);
+        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)
+      }
+    })
+  }
+
   showSnackBar(messages?: any, type?: any): void {
     this.snackBar.open(messages, '', {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
       panelClass: type === SNACKBAR_SUCCESS ? 'bg-lime-500' : type === SNACKBAR_WARNING ? 'bg-yellow-500' : 'bg-red-500'
     });
   }
@@ -62,79 +149,5 @@ export class BaseComponent {
       callback && callback(value);
     });
   }
-
-  getAll() {
-    this.baseService?.getListItem().pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
-      /*if(res.code === RESPONSE_CODE_SUCCESS){
-        this.listItem = res.data;
-      }else{
-        this.showSnackBar(res.message, SNACKBAR_DANGER);
-      }*/
-      console.log('res', res)
-      this.listItem = res.data;
-    })
-  }
-
-  getDetailById(id?: any) {
-    this.baseService?.getItemById(id).pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
-      /*if(res.code === RESPONSE_CODE_SUCCESS){
-        this.itemDetail = res.data;
-      }else{
-        this.showSnackBar(res.message, SNACKBAR_DANGER)
-      }*/
-      console.log('detail', res);
-      this.formModel?.patchValue(res);
-    })
-  }
-
-  deleteItem(id?: any){
-    console.log(this.baseService)
-    this.baseService?.deleteItem(id).pipe(takeUntil(this._destroy$)).subscribe((res) => {
-      /*if(res.code === RESPONSE_CODE_SUCCESS){
-        this.showSnackBar(res.message, SNACKBAR_SUCCESS);
-      }else{
-        this.showSnackBar(res.message, SNACKBAR_DANGER)
-      }*/
-      console.log('delete', res);
-      this.dialogRef?.close('reload');
-    })
-  }
-
-  updateItem(item?: any){
-    this.baseService?.updateItem(item).pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
-      /*if(res.code === RESPONSE_CODE_SUCCESS){
-        this.showSnackBar(res.message, SNACKBAR_SUCCESS);
-      }else {
-        this.showSnackBar(res.message, SNACKBAR_DANGER);
-      }*/
-      console.log('update', res);
-      this.formModel?.patchValue(res)
-    })
-  }
-
-  addItem(item?: any){
-    /*this?.baseService?.addNewItem(item).pipe(takeUntil(this._destroy$)).subscribe((res) => {
-      /!*if(res.code === RESPONSE_CODE_SUCCESS){
-        this.showSnackBar(res.message, SNACKBAR_SUCCESS);
-      }else{
-        this.showSnackBar(res.message, SNACKBAR_DANGER)
-      }*!/
-      console.log('add new', res);
-      this.dialogRef?.close('reload')
-    })*/
-
-    this.save$.pipe(
-      // @ts-ignore
-      switchMap((obj: any) => {
-        return this.baseService?.addNewItem(obj).pipe(catchError(err => of(null)));
-      }),
-      takeUntil(this._destroy$),
-      catchError(err => of(null))
-    ).subscribe(res => {
-      console.log('add new', res);
-      this.dialogRef?.close('reload')
-    })
-  }
-
 
 }

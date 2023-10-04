@@ -1,3 +1,7 @@
+<p class="text-3xl font-bold underline">
+  Hello world!
+</p>
+<mat-icon svgIcon="heroicons_outline:academic-cap"></mat-icon>
 <app-data-table
   [rows]="listItem | slice: pagination.size * pagination.page : pagination.size * (pagination.page + 1)"
   [columns]="columns"
@@ -8,7 +12,7 @@
     <ng-container [ngSwitch]="column.columnDef">
       <ng-container *ngSwitchCase="'action'">
         <button mat-stroked-button color="primary" (click)="addOrEdit(row)">Edit</button>
-        <button mat-stroked-button color="warn" class="!ml-2" (click)="delete(row)">Delete</button>
+        <button mat-stroked-button color="warn" class="ml-2" (click)="delete(row)">Delete</button>
       </ng-container>
       <ng-container *ngSwitchDefault>
         <div [innerHTML]="column.cellRenderer ? column.cellRenderer(row) : row[column.columnDef]"

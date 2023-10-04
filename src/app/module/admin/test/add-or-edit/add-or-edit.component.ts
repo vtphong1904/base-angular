@@ -1,8 +1,8 @@
 import {Component, Inject, Injector, OnInit} from '@angular/core';
 import {BaseComponent} from '@app/core/base.component';
-import {TestService} from '@app/module/admin/test/test.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Validators} from '@angular/forms';
+import {TestService} from '@shared/services/test.service';
 
 @Component({
   selector: 'app-add-or-edit',
@@ -18,18 +18,28 @@ export class AddOrEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.getDetailById({name: 'Phong', age: 24})
-    this.addItem();
+    this.getDetailById(4, this.convertObj.bind(this))
+    this.addNewItem();
   }
 
   initForm(){
     this.formModel = this.fb.group({
       name: [null, Validators.compose([Validators.required])],
-      age: [null, Validators.compose([Validators.required])]
+      code: [null, Validators.compose([Validators.required])]
     })
   }
 
   addTest() {
-    this.addItem({name: 'Phong'})
+    this.addNewItem({name: 'Phong'})
   }
+
+  convertObj(item: any){
+    const temp = {...item}
+    if(temp.id === 4){
+      temp.name = 'Justina Xie';
+      temp.code = 'Xie Chu Ling';
+    };
+    return temp;
+  }
+
 }
