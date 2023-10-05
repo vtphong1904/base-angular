@@ -4,7 +4,7 @@ import {BaseComponent} from '@app/core/base.component';
 import {ConfirmDialogComponent} from '@shared/components/confirm-dialog/confirm-dialog.component';
 import {AddOrEditComponent} from '@app/module/admin/test/add-or-edit/add-or-edit.component';
 import {TestService} from '@shared/services/test.service';
-
+import {TranslocoService} from '@ngneat/transloco';
 
 @Component({
   selector: 'app-test',
@@ -40,11 +40,19 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
       actions: ['view','edit', 'delete'],
     }
   ];
-  constructor(injector: Injector, private testService: TestService) {
+  checked = false;
+  constructor(injector: Injector, private testService: TestService, private _translocoService: TranslocoService) {
     super(injector, testService)
   }
 
   ngOnInit(): void {
+    const lang = this._translocoService.getActiveLang();
+    if(lang === 'en'){
+      this.checked = false;
+    }else{
+      this.checked = true;
+    }
+
     this.testService.getContentTest().subscribe(res => {
       console.log(res);
     })
@@ -73,5 +81,10 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
         this.getAll();
       }
     })
+  }
+
+  setLanguage() {
+    this.checked = !this.checked;
+    this._translocoService.setActiveLang(this.checked ? 'vi' : 'en');
   }
 }

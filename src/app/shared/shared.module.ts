@@ -12,6 +12,7 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 import { HasAnyAuthorityDirective } from './directives/has-any-authority.directive';
 import { OnlyNumberDirective } from './directives/only-number.directive';
 import { TooltipDirective } from './directives/tooltip.directive';
+import { ControlDisabledDirective } from './directives/control-disabled.directive';
 
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatPaginatorModule} from "@angular/material/paginator";
@@ -20,7 +21,9 @@ import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { ControlDisabledDirective } from './directives/control-disabled.directive';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
+import {TranslocoCoreModule} from '@app/core/transloco/transloco.module';
 
 export const MatModules = [
   MatPaginatorModule,
@@ -29,7 +32,8 @@ export const MatModules = [
   MatButtonModule,
   MatSnackBarModule,
   MatDialogModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatSlideToggleModule
 ];
 export const directives = [
   HasAnyAuthorityDirective,
@@ -41,6 +45,7 @@ export const directives = [
     FormsModule,
     ReactiveFormsModule,
     ...MatModules,
+    TranslocoCoreModule
   ],
     declarations: [
     ErrorMessageComponent,

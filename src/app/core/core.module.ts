@@ -2,12 +2,14 @@ import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {BaseComponent} from './base.component';
 import {AuthModule} from "./auth/auth.module";
 import {IconsModule} from '@app/core/icons/icons.module';
+import {TranslocoCoreModule} from '@app/core/transloco/transloco.module';
 
 @NgModule({
     declarations: [BaseComponent],
     imports: [
         AuthModule,
         IconsModule,
+        TranslocoCoreModule
     ]
 })
 export class CoreModule {
