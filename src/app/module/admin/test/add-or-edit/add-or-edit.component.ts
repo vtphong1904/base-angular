@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, OnInit} from '@angular/core';
+import {Component, Inject, Injector, OnDestroy, OnInit} from '@angular/core';
 import {BaseComponent} from '@app/core/base.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Validators} from '@angular/forms';
@@ -9,7 +9,7 @@ import {TestService} from '@shared/services/test.service';
   templateUrl: './add-or-edit.component.html',
   styleUrls: ['./add-or-edit.component.scss']
 })
-export class AddOrEditComponent extends BaseComponent implements OnInit {
+export class AddOrEditComponent extends BaseComponent implements OnInit, OnDestroy {
 
   constructor(injector: Injector, testService: TestService, dialogRef: MatDialogRef<AddOrEditComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,) {
@@ -19,7 +19,7 @@ export class AddOrEditComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getDetailById(4, this.convertObj.bind(this))
-    this.addNewItem();
+    this.asyncAddOrEditItem();
   }
 
   initForm(){
@@ -40,6 +40,10 @@ export class AddOrEditComponent extends BaseComponent implements OnInit {
       temp.code = 'Xie Chu Ling';
     };
     return temp;
+  }
+
+  override ngOnDestroy() {
+    console.log('Override destroy method');
   }
 
 }

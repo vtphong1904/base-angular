@@ -1,4 +1,4 @@
-import {Component, Injector, OnInit} from '@angular/core';
+import {Component, Injector, OnDestroy, OnInit} from '@angular/core';
 import {IColumnTable, IPagination} from '@shared/components/data-table/data-table.component';
 import {BaseComponent} from '@app/core/base.component';
 import {ConfirmDialogComponent} from '@shared/components/confirm-dialog/confirm-dialog.component';
@@ -11,7 +11,7 @@ import {TestService} from '@shared/services/test.service';
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss']
 })
-export class TestComponent extends BaseComponent implements OnInit {
+export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
   pagination: IPagination = {
     page: 0,
     size: 5,

@@ -44,6 +44,10 @@ export class BaseService {
       });
     }
   }
+
+  duplicateUsername(): Observable<any>{
+    return of(true);
+  }
 }
 
 export const randomResponse = (item?: any) => {
@@ -58,7 +62,7 @@ export const randomResponse = (item?: any) => {
       message: 'Có lỗi xảy ra'
     }
   ];
-  return arr[randomNumber];
+  return arr[randomNumber - 1];
 }
 
 export const fakeData = [

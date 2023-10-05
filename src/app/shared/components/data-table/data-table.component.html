@@ -24,8 +24,7 @@
                         [ngTemplateOutletContext]="{row: row, column: column, index: getRowIndex(row)}">
           </ng-container>
           <ng-template #defaultRowTemplate>
-            <div [innerHTML]="column.cellRenderer ? column.cellRenderer(row) : row[column.columnDef]"
-                 class="whitespace-nowrap truncate"></div>
+            <app-td-table-default [text]="column.cellRenderer ? column.cellRenderer(row) : row[column.columnDef]"></app-td-table-default>
           </ng-template>
         </ng-container>
       </ng-container>

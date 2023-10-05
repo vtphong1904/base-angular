@@ -5,11 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
 import { ErrorMessageInputComponent } from './components/error-message-input/error-message-input.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
+import { TdTableDefaultComponent } from './components/data-table/td-table-default/td-table-default.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 
 import { HasAnyAuthorityDirective } from './directives/has-any-authority.directive';
 import { OnlyNumberDirective } from './directives/only-number.directive';
+import { TooltipDirective } from './directives/tooltip.directive';
 
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatPaginatorModule} from "@angular/material/paginator";
@@ -17,6 +19,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatTableModule} from "@angular/material/table";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ControlDisabledDirective } from './directives/control-disabled.directive';
 
 export const MatModules = [
   MatPaginatorModule,
@@ -24,7 +28,8 @@ export const MatModules = [
   MatTableModule,
   MatButtonModule,
   MatSnackBarModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTooltipModule
 ];
 export const directives = [
   HasAnyAuthorityDirective,
@@ -44,13 +49,19 @@ export const directives = [
     DataTableComponent,
     ConfirmDialogComponent,
     SnackBarComponent,
+    TooltipDirective,
+    TdTableDefaultComponent,
+    ControlDisabledDirective,
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     ...MatModules,
-    DataTableComponent
+    DataTableComponent,
+    TooltipDirective,
+    TdTableDefaultComponent,
+    ControlDisabledDirective
   ],
 })
 export class SharedModule {}

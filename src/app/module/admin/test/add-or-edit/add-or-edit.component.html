@@ -6,7 +6,7 @@
   </div>
   <div class="control">
     <label>Code: </label>
-    <input type="text" formControlName="code"/>
+    <input type="text" formControlName="code" [appControlDisabled]="true"/>
   </div>
 </div>
 <button mat-stroked-button color="warn" (click)="save$.next(formModel.getRawValue())">Add</button>

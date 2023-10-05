@@ -15,6 +15,7 @@ import {
   SNACKBAR_SUCCESS,
   SNACKBAR_WARNING, UPDATE_ITEM_SUCCESS
 } from '@shared/constants/app.constant';
+import {SnackBarComponent} from '@shared/components/snack-bar/snack-bar.component';
 
 
 @Component({
@@ -34,10 +35,10 @@ export class BaseComponent {
   public formModel: FormGroup;
   public formSearch: FormGroup;
 
+  public save$ = new Subject();
+
   public _destroy$ = new Subject();
   public _subscriptionAll$ = new Subscription();
-
-  public save$ = new Subject();
 
   constructor(injector: Injector, service?: BaseService, dialogRef?: MatDialogRef<any>) {
     this.fb = injector.get(FormBuilder);
@@ -50,94 +51,110 @@ export class BaseComponent {
     // this.formModel = this.fb.group({});
   }
 
-  addNewItem(item?: any){
-    this?.baseService?.addItem(item).pipe(takeUntil(this._destroy$)).subscribe((res) => {
-      if(res.code === RESPONSE_CODE_SUCCESS){
-        console.log('Add success', res);
-        this.showSnackBar(ADD_ITEM_SUCCESS, SNACKBAR_SUCCESS);
-        this.dialogRef?.close('reload');
-      }else{
-        console.log('Add fail', res);
-        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)
-      }
-    })
-  }
-
-  asyncAddNewItem(){
-    this.save$.pipe(
-      // @ts-ignore
-      switchMap((obj: any) => {
-        return this.baseService?.addItem(obj).pipe(catchError(err => of(null)));
-      }),
-      takeUntil(this._destroy$),
-      catchError(err => of(null))
-    ).subscribe(res => {
-      if(res.code === RESPONSE_CODE_SUCCESS){
-        console.log('Add success', res);
-        this.showSnackBar(ADD_ITEM_SUCCESS, SNACKBAR_SUCCESS);
-        this.dialogRef?.close('reload');
-      }else{
-        console.log('Add fail', res);
-        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)
-      }
-    })
-  }
   getAll() {
     this.baseService?.getListItem().pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
-      if(res.code === RESPONSE_CODE_SUCCESS){
+      if (res.code === RESPONSE_CODE_SUCCESS) {
         console.log('List item', res);
         this.listItem = res.data;
-      }else{
+      } else {
         console.log('Get list fail', res);
         this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER);
       }
     })
   }
 
+  addNewItem(item?: any) {
+    this?.baseService?.addItem(item).pipe(takeUntil(this._destroy$)).subscribe((res) => {
+      if (res.code === RESPONSE_CODE_SUCCESS) {
+        console.log('Add success', res);
+        this.showSnackBar(ADD_ITEM_SUCCESS, SNACKBAR_SUCCESS);
+        this.dialogRef?.close('reload');
+      } else {
+        console.log('Add fail', res);
+        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)
+      }
+    })
+  }
+
+  asyncAddOrEditItem() {
+    this.save$.pipe(
+      // @ts-ignore
+      switchMap((obj: any) => {
+        if (obj?.id) {
+          return this.baseService?.updateItem(obj).pipe(catchError(err => of(null)));
+        } else {
+          return this.baseService?.addItem(obj).pipe(catchError(err => of(null)));
+        }
+      }),
+      takeUntil(this._destroy$),
+      catchError(err => of(null))
+    ).subscribe(res => {
+      if (res.code === RESPONSE_CODE_SUCCESS) {
+        console.log('Add or edit success', res);
+        this.showSnackBar(this.itemDetail ? UPDATE_ITEM_SUCCESS : ADD_ITEM_SUCCESS, SNACKBAR_SUCCESS);
+        this.dialogRef?.close('reload');
+      } else {
+        console.log('Add or edit fail', res);
+        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)
+      }
+    })
+  }
   getDetailById(id?: any, callback?: any) {
     this.baseService?.getItemById(id).pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
-      if(res.code === RESPONSE_CODE_SUCCESS){
+      if (res.code === RESPONSE_CODE_SUCCESS) {
         console.log('Detail item', res);
         this.itemDetail = res.data;
         this.formModel?.patchValue(callback ? callback(this.itemDetail) : this.itemDetail);
-      }else{
+      } else {
         console.log('Detail', res);
         this.showSnackBar(res.message, SNACKBAR_DANGER)
       }
     })
   }
 
-  editItem(item?: any){
+  editItem(item?: any) {
     this.baseService?.updateItem(item).pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
-      if(res.code === RESPONSE_CODE_SUCCESS){
+      if (res.code === RESPONSE_CODE_SUCCESS) {
         console.log('Update success', res)
         this.showSnackBar(UPDATE_ITEM_SUCCESS, SNACKBAR_SUCCESS);
-      }else {
+      } else {
         console.log('Update fail', res)
         this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER);
       }
     })
   }
 
-  deleteItem(id?: any){
+  deleteItem(id?: any) {
     this.baseService?.deleteItem(id).pipe(takeUntil(this._destroy$)).subscribe((res) => {
-      if(res.code === RESPONSE_CODE_SUCCESS){
+      if (res.code === RESPONSE_CODE_SUCCESS) {
         console.log('Delete success', res);
         this.showSnackBar(DELETE_ITEM_SUCCESS, SNACKBAR_SUCCESS);
-      }else{
+      } else {
         console.log('Delete fail', res);
         this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)
       }
     })
   }
 
-  showSnackBar(messages?: any, type?: any): void {
-    this.snackBar.open(messages, '', {
+  showSnackBar(message: any, type?: any): void {
+    this.snackBar.open(message, '', {
       duration: 2000,
       horizontalPosition: 'right',
       verticalPosition: 'top',
       panelClass: type === SNACKBAR_SUCCESS ? 'bg-lime-500' : type === SNACKBAR_WARNING ? 'bg-yellow-500' : 'bg-red-500'
     });
+
+    /*Custom snack bar component*/
+    /*this.snackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        message: message,
+        type: type
+      },
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: type === SNACKBAR_SUCCESS ? 'bg-lime-500' : type === SNACKBAR_WARNING ? 'bg-yellow-500' : 'bg-red-500'
+    })*/
   }
 
   showDialog(component?: any, options: MatDialogConfig = {}, callback?: any) {
@@ -148,6 +165,13 @@ export class BaseComponent {
     ref.afterClosed().pipe(take(1)).subscribe((value: any) => {
       callback && callback(value);
     });
+  }
+
+  ngOnDestroy(){
+    console.log('Destroy component');
+    this._destroy$.next(null);
+    this._destroy$.complete();
+    this._destroy$.unsubscribe();
   }
 
 }

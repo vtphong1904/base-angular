@@ -12,10 +12,10 @@ import {SharedModule} from '@shared/shared.module';
     TestComponent,
     AddOrEditComponent
   ],
-  imports: [
-    CommonModule,
-    TestRoutingModule,
-    SharedModule
-  ]
+    imports: [
+        CommonModule,
+        TestRoutingModule,
+        SharedModule,
+    ]
 })
 export class TestModule { }
