@@ -85,5 +85,45 @@ export const fakeData = [
     id: 4,
     name: 'Giannis Antetokounmpo',
     code: 'Demigod'
+  },
+  {
+    id: 5,
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
+  },
+  {
+    id: 6,
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
+  },
+  {
+    id: 7,
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
+  },
+  {
+    id: 8,
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
+  },
+  {
+    id: 9,
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
+  },
+  {
+    id: 10,
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
+  },
+  {
+    id: 11,
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
+  },
+  {
+    id: 12,
+    name: 'Giannis Antetokounmpo',
+    code: 'Demigod'
   }
 ]

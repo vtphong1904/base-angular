@@ -12,9 +12,9 @@ import {TranslocoService} from '@ngneat/transloco';
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
-  pagination: IPagination = {
+  override pagination: IPagination = {
     page: 0,
-    size: 5,
+    size: 10,
     total: 0,
     isShow: true
   }

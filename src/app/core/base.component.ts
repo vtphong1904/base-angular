@@ -16,6 +16,7 @@ import {
   SNACKBAR_WARNING, UPDATE_ITEM_SUCCESS
 } from '@shared/constants/app.constant';
 import {SnackBarComponent} from '@shared/components/snack-bar/snack-bar.component';
+import {IPagination} from '@shared/components/data-table/data-table.component';
 
 
 @Component({
@@ -31,6 +32,11 @@ export class BaseComponent {
   public dialogRef: MatDialogRef<any> | undefined;
 
   public listItem: any;
+  public pagination: IPagination = {
+    page: 0,
+    size: 5,
+    total: 0,
+  }
   public itemDetail: any;
   public formModel: FormGroup;
   public formSearch: FormGroup;
@@ -51,16 +57,30 @@ export class BaseComponent {
     // this.formModel = this.fb.group({});
   }
 
-  getAll() {
-    this.baseService?.getListItem().pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
-      if (res.code === RESPONSE_CODE_SUCCESS) {
-        console.log('List item', res);
-        this.listItem = res.data;
-      } else {
-        console.log('Get list fail', res);
-        this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER);
-      }
+  getAll(params?: any) {
+    this.baseService?.getListItem(params).pipe(takeUntil(this._destroy$)).subscribe((res: any) => {
+      this.handleListItemResponse(res);
     })
+  }
+
+  handleListItemResponse(res: any){
+    if(res?.code === RESPONSE_CODE_SUCCESS){
+      console.log('List item', res);
+      this.listItem = res.data;
+      /*this.pagination.page = 0;
+      this.pagination.total = this.listItem?.length;*/
+      this.pagination = this.formatPagination(this.pagination, {page: 0, total: this.listItem?.length})
+    }else{
+      console.log('Get list fail', res);
+      this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER);
+    }
+  }
+
+  formatPagination(initPage: any, overPage: any){
+    return {
+      ...initPage,
+      ...overPage
+    }
   }
 
   addNewItem(item?: any) {

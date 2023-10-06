@@ -34,7 +34,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns" class="h-12"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="h-16"></tr>
 </table>
-
+<p>{{pagination | json}}</p>
 <mat-paginator *ngIf="!!pagination.isShow" [pageSizeOptions]="[5, 10, 20]"
                showFirstLastButtons
                [pageSize]="pagination.size"
