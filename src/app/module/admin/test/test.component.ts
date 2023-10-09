@@ -5,6 +5,7 @@ import {ConfirmDialogComponent} from '@shared/components/confirm-dialog/confirm-
 import {AddOrEditComponent} from '@app/module/admin/test/add-or-edit/add-or-edit.component';
 import {TestService} from '@shared/services/test.service';
 import {TranslocoService} from '@ngneat/transloco';
+import {FormArray} from '@angular/forms';
 
 @Component({
   selector: 'app-test',
@@ -12,6 +13,16 @@ import {TranslocoService} from '@ngneat/transloco';
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
+
+  testForm = this.fb.group({
+    configs: this.fb.array([
+      this.fb.group({
+        name: '',
+        age: ''
+      })
+    ])
+  })
+
   override pagination: IPagination = {
     page: 0,
     size: 10,
@@ -45,6 +56,10 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
     super(injector, testService)
   }
 
+  get configs(){
+    return this.testForm.get('configs') as FormArray
+  }
+
   ngOnInit(): void {
     const lang = this._translocoService.getActiveLang();
     if(lang === 'en'){
@@ -57,6 +72,19 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
       console.log(res);
     })
     this.getAll();
+  }
+
+  addNewConfigItem(){
+    this.configs.push(
+      this.fb.group({
+        name: [''],
+        age: ['']
+      })
+    )
+  }
+
+  deleteConfigItem(index: any){
+    this.configs.removeAt(index)
   }
 
   changePage(e: any) {

@@ -24,6 +24,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import {TranslocoCoreModule} from '@app/core/transloco/transloco.module';
+import {MatInputModule} from '@angular/material/input';
 
 export const MatModules = [
   MatPaginatorModule,
@@ -33,7 +34,8 @@ export const MatModules = [
   MatSnackBarModule,
   MatDialogModule,
   MatTooltipModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatInputModule
 ];
 export const directives = [
   HasAnyAuthorityDirective,
