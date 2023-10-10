@@ -60,15 +60,16 @@ export const directives = [
     TdTableDefaultComponent,
     ControlDisabledDirective,
   ],
-  exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ...MatModules,
-    DataTableComponent,
-    TooltipDirective,
-    TdTableDefaultComponent,
-    ControlDisabledDirective
-  ],
+    exports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ...MatModules,
+        DataTableComponent,
+        TooltipDirective,
+        TdTableDefaultComponent,
+        ControlDisabledDirective,
+        ErrorMessageInputComponent
+    ],
 })
 export class SharedModule {}

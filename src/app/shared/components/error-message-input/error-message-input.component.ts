@@ -31,7 +31,9 @@ export class ErrorMessageInputComponent {
     errMultiEmail: (params: any, name: any) => `${name} không đúng định dạng`,
     asyncDuplicate: (params: any, name: any) => `${name} đã tồn tại`,
     isWhiteSpace: (params: any,name: any) => `${name} không được bỏ trống`,
-    validEndAt: (params: any, name: any) => `${name} phải lớn hơn ${params?.field}`
+    validEndAt: (params: any, name: any) => `${name} phải lớn hơn ${params?.field}`,
+    duplicateArray: (params: any, name: any) => `Giống nhau mất rồi`,
+    dupArr: (params: any, name: any) => `Form Array trùng nhau mất rồi`
 
   };
 

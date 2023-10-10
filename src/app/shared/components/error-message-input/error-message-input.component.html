@@ -1,5 +1,5 @@
 <div *ngIf="shouldShowErrors()">
     <p style="font-size: 13px" *ngFor="let error of listOfErrors(); let lastIndex = last">
-      <span *ngIf="lastIndex">{{ error }}</span>
+      <span *ngIf="lastIndex" class="text-red-500">{{ error }}</span>
     </p>
 </div>

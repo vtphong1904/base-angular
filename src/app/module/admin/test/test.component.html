@@ -40,16 +40,20 @@
         <mat-form-field class="w-1/3">
           <input type="text" placeholder="Name" matInput formControlName="name" id="name"/>
         </mat-form-field>
+        <app-error-message-input [control]="item.get('name')"></app-error-message-input>
 
         <label for="age">Age</label>
         <mat-form-field class="w-1/3">
           <input type="text" matInput placeholder="Age" formControlName="age" id="age"/>
         </mat-form-field>
 
-        <button mat-stroked-button color="primary" class="w-1/12" *ngIf="i === 0" (click)="addNewConfigItem()">Add</button>
-        <button mat-stroked-button color="primary" class="w-1/12" *ngIf="i !== 0" (click)="deleteConfigItem(i)">Delete</button>
+        <button mat-stroked-button color="primary" class="w-1/12" *ngIf="i === 0" (click)="addNewConfigItem()">Add
+        </button>
+        <button mat-stroked-button color="primary" class="w-1/12" *ngIf="i !== 0" (click)="deleteConfigItem(i)">Delete
+        </button>
       </div>
     </div>
+    <app-error-message-input [control]="testForm.get('configs')"></app-error-message-input>
   </div>
 </ng-container>
 
