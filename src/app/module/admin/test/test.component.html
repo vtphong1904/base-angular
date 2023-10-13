@@ -55,6 +55,14 @@
     </div>
     <app-error-message-input [control]="testForm.get('configs')"></app-error-message-input>
   </div>
+
+  <button mat-stroked-button color="primary" class="w-1/12" (click)="connectSocket()">Connect
+  </button>
+  <button mat-stroked-button color="primary" class="w-1/12" (click)="disConnectSocket()">Disconnect
+  </button>
+  <div *ngFor="let d of dataSocket">
+    {{d.s}} : {{d.p}}
+  </div>
 </ng-container>
 
 

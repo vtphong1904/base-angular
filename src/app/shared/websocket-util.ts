@@ -10,7 +10,8 @@ export class WebsocketUtil{
   connectStatus: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor() {
-    this.websocketEndpoint = `${environment.apiUrl}/ws`;
+    // this.websocketEndpoint = `${environment.apiUrl}/ws`;
+    this.websocketEndpoint = 'wss://ws.finnhub.io?token=bsr37a748v6tucpfplbg';
   }
 
   connect(){
