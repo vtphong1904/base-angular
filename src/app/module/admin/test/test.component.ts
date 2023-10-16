@@ -6,6 +6,7 @@ import {AddOrEditComponent} from '@app/module/admin/test/add-or-edit/add-or-edit
 import {TestService} from '@shared/services/test.service';
 import {TranslocoService} from '@ngneat/transloco';
 import {AbstractControl, FormArray, ValidatorFn, Validators} from '@angular/forms';
+import {data} from 'autoprefixer';
 
 @Component({
   selector: 'app-test',
@@ -52,7 +53,7 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
     }
   ];
   checked = false;
-  constructor(injector: Injector, private testService: TestService, private _translocoService: TranslocoService) {
+  constructor(injector: Injector, private testService: TestService) {
     super(injector, testService)
   }
 
@@ -61,7 +62,7 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const lang = this._translocoService.getActiveLang();
+    const lang = this.translocoService.getActiveLang();
     if(lang === 'en'){
       this.checked = false;
     }else{
@@ -94,8 +95,9 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
 
 
   addOrEdit(row: any): void {
-    console.log(row);
-    this.showDialog(AddOrEditComponent, {}, (value: any) => {
+    this.showDialog(AddOrEditComponent, {
+      data: row
+    }, (value: any) => {
       if(value){
         this.getAll();
       }
@@ -113,8 +115,10 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
 
   setLanguage() {
     this.checked = !this.checked;
-    this._translocoService.setActiveLang(this.checked ? 'vi' : 'en');
+    this.translocoService.setActiveLang(this.checked ? 'vi' : 'en');
   }
+
+  protected readonly data = data;
 }
 
 export const duplicateNameArray = (): ValidatorFn => {

@@ -17,6 +17,9 @@ import {
 } from '@shared/constants/app.constant';
 import {SnackBarComponent} from '@shared/components/snack-bar/snack-bar.component';
 import {IPagination} from '@shared/components/data-table/data-table.component';
+import {ConfirmDialogComponent} from '@shared/components/confirm-dialog/confirm-dialog.component';
+import {TranslocoCoreModule} from '@app/core/transloco/transloco.module';
+import {TranslocoService} from '@ngneat/transloco';
 
 
 @Component({
@@ -30,6 +33,7 @@ export class BaseComponent {
   public snackBar: MatSnackBar;
   public matDialog: MatDialog;
   public dialogRef: MatDialogRef<any> | undefined;
+  public translocoService: any;
 
   public listItem: any;
   public pagination: IPagination = {
@@ -40,6 +44,7 @@ export class BaseComponent {
   public itemDetail: any;
   public formModel: FormGroup;
   public formSearch: FormGroup;
+  public initParams: any;
 
   public save$ = new Subject();
 
@@ -50,6 +55,7 @@ export class BaseComponent {
     this.fb = injector.get(FormBuilder);
     this.snackBar = injector.get(MatSnackBar);
     this.matDialog = injector.get(MatDialog);
+    this.translocoService = injector.get(TranslocoService);
 
     this.baseService = service;
     this.dialogRef = dialogRef;
@@ -144,11 +150,21 @@ export class BaseComponent {
     })
   }
 
+  openConfirmDelete(data?: any): void{
+    this.showDialog(ConfirmDialogComponent, {
+      data: data
+    }, (value: any) => {
+      if(value){
+        this.deleteItem(data?.id);
+      }
+    })
+  }
   deleteItem(id?: any) {
     this.baseService?.deleteItem(id).pipe(takeUntil(this._destroy$)).subscribe((res) => {
       if (res.code === RESPONSE_CODE_SUCCESS) {
         console.log('Delete success', res);
         this.showSnackBar(DELETE_ITEM_SUCCESS, SNACKBAR_SUCCESS);
+        this.getAll(this.initParams);
       } else {
         console.log('Delete fail', res);
         this.showSnackBar(res.message || MESSAGE_ERROR_DEFAULT, SNACKBAR_DANGER)

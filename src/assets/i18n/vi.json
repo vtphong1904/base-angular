@@ -1,3 +1,9 @@
 {
-  "title": "Xin chào"
+  "title": "Xin chào",
+  "notification" : {
+    "addSuccess": "Thêm mới thành công",
+    "updateSuccess": "Cập nhật thành công",
+    "deleteSuccess": "Xóa thành công",
+    "errorMessage": "Có lỗi xảy ra !!!!"
+  }
 }

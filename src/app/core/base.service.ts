@@ -36,12 +36,12 @@ export class BaseService {
       return of({
         code: '00',
         data: temp[0]
-      });
+      }).pipe(delay(300));
     }else{
       return of({
         code: 'E05',
         message: 'Item không tồn tại'
-      });
+      }).pipe(delay(300));
     }
   }
 
@@ -88,23 +88,23 @@ export const fakeData = [
   },
   {
     id: 5,
-    name: 'Giannis Antetokounmpo',
-    code: 'Demigod'
+    name: 'Damian Lillard',
+    code: 'Dame time'
   },
   {
     id: 6,
-    name: 'Giannis Antetokounmpo',
-    code: 'Demigod'
+    name: 'James Harden',
+    code: 'Tứ hoàng râu đen'
   },
   {
     id: 7,
-    name: 'Giannis Antetokounmpo',
-    code: 'Demigod'
+    name: 'Luka Doncic',
+    code: 'Prince'
   },
   {
     id: 8,
-    name: 'Giannis Antetokounmpo',
-    code: 'Demigod'
+    name: 'Nikola Jokić',
+    code: 'Joker'
   },
   {
     id: 9,
@@ -113,17 +113,17 @@ export const fakeData = [
   },
   {
     id: 10,
-    name: 'Giannis Antetokounmpo',
-    code: 'Demigod'
+    name: 'Jordan Poole',
+    code: 'Nhóc đần ngu'
   },
   {
     id: 11,
-    name: 'Giannis Antetokounmpo',
-    code: 'Demigod'
+    name: 'Kyrie Irving',
+    code: 'Witch'
   },
   {
     id: 12,
-    name: 'Giannis Antetokounmpo',
-    code: 'Demigod'
+    name: 'Kobe Bryant',
+    code: 'Black mamba'
   }
 ]

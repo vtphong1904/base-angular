@@ -1,2 +1,3 @@
 <p>confirm-dialog works!</p>
-
+<button mat-stroked-button color="primary" (click)="dialogRef.close()">Cancel</button>
+<button mat-stroked-button color="warn" class="ml-2" (click)="dialogRef.close('confirm')">Delete</button>

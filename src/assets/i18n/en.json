@@ -1,3 +1,9 @@
 {
-  "title": "Hello world"
+  "title": "Hello world",
+  "notification" : {
+    "addSuccess": "Add new successfully",
+    "updateSuccess": "Update successfully",
+    "deleteSuccess": "Delete successfully",
+    "errorMessage": "Have error !!!!"
+  }
 }

@@ -18,11 +18,13 @@ export class AddOrEditComponent extends BaseComponent implements OnInit, OnDestr
 
   ngOnInit(): void {
     this.initForm();
-    this.getDetailById(4, this.convertObj.bind(this))
+    console.log('data', this.data);
+    this.getDetailById(this.data?.id);
+    // this.getDetailById(4, this.convertObj.bind(this))
     this.asyncAddOrEditItem();
   }
 
-  initForm(){
+  initForm() {
     this.formModel = this.fb.group({
       name: [null, Validators.compose([Validators.required])],
       code: [null, Validators.compose([Validators.required])]
@@ -33,12 +35,13 @@ export class AddOrEditComponent extends BaseComponent implements OnInit, OnDestr
     this.addNewItem({name: 'Phong'})
   }
 
-  convertObj(item: any){
+  convertObj(item: any) {
     const temp = {...item}
-    if(temp.id === 4){
+    if (temp.id === 4) {
       temp.name = 'Justina Xie';
       temp.code = 'Xie Chu Ling';
-    };
+    }
+    ;
     return temp;
   }
 

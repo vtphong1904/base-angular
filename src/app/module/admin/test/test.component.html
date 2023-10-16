@@ -22,7 +22,7 @@
       <ng-container [ngSwitch]="column.columnDef">
         <ng-container *ngSwitchCase="'action'">
           <button mat-stroked-button color="primary" (click)="addOrEdit(row)">Edit</button>
-          <button mat-stroked-button color="warn" class="ml-2" (click)="delete(row)">Delete</button>
+          <button mat-stroked-button color="warn" class="ml-2" (click)="openConfirmDelete(row)">Delete</button>
         </ng-container>
         <ng-container *ngSwitchDefault>
           <app-td-table-default

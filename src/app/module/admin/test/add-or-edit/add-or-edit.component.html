@@ -9,5 +9,5 @@
     <input type="text" formControlName="code" [appControlDisabled]="true"/>
   </div>
 </div>
-<button mat-stroked-button color="warn" (click)="save$.next(formModel.getRawValue())">Add</button>
+<button mat-stroked-button color="warn" (click)="save$.next(formModel.getRawValue())">{{data ? 'Edit' : 'Add'}}</button>
 
