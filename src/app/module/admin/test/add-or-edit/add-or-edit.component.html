@@ -9,5 +9,29 @@
     <input type="text" formControlName="code" [appControlDisabled]="true"/>
   </div>
 </div>
+
+<ng-select [items]="cities3"
+           bindLabel="name"
+           bindValue="name"
+           [addTag]="addCustomUser"
+           [multiple]="true"
+           placeholder="Select city"
+           [(ngModel)]="selectedCityName">
+  <ng-template ng-header-tmp>
+    <input/>
+  </ng-template>
+  <ng-template ng-label-tmp let-item="item">
+    <img height="15" width="15" [src]="item.avatar"/>
+    <b>{{item.name}}</b> is cool
+    <b>Close</b>
+  </ng-template>
+  <ng-template ng-option-tmp let-item="item" let-index="index">
+    <img height="15" width="15" [src]="item.avatar"/>
+    <b>{{item.name}}</b>
+  </ng-template>
+  <ng-template ng-footer-tmp>
+    Custom footer
+  </ng-template>
+</ng-select>
 <button mat-stroked-button color="warn" (click)="save$.next(formModel.getRawValue())">Add</button>
 

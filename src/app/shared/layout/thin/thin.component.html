@@ -1,0 +1,18 @@
+<ng-container *transloco="let t">
+  <div class="w-full h-full flex flex-col">
+    <div class="w-full h-10 border text-center">
+      <h2>This is header</h2>
+    </div>
+    <div class="grow basis-0 flex overflow-auto">
+      <div class="w-1/4 border flex flex-col">
+        <div class="h-10 border-b flex items-center pl-2 cursor-pointer" [routerLink]="navigation.link" *ngFor="let navigation of listNavigation">{{navigation.label}}</div>
+      </div>
+      <div class="w-3/4 grow basis-0 overflow-auto">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div class="w-full h-10 border text-center">
+      <h2>This is footer</h2>
+    </div>
+  </div>
+</ng-container>

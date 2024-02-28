@@ -6,6 +6,7 @@ import {TestComponent} from '@app/module/admin/test/test.component';
 import {AddOrEditComponent} from '@app/module/admin/test/add-or-edit/add-or-edit.component';
 import {SharedModule} from '@shared/shared.module';
 import {TranslocoRootModule} from '@app/transloco-root.module';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 
 @NgModule({
@@ -13,11 +14,12 @@ import {TranslocoRootModule} from '@app/transloco-root.module';
     TestComponent,
     AddOrEditComponent
   ],
-    imports: [
-        CommonModule,
-        TestRoutingModule,
-        SharedModule,
-        TranslocoRootModule,
-    ]
+  imports: [
+    CommonModule,
+    TestRoutingModule,
+    SharedModule,
+    TranslocoRootModule,
+    NgSelectModule,
+  ]
 })
 export class TestModule { }

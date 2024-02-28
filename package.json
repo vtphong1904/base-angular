@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@ng-select/ng-select": "^2.16.0",
     "@ngneat/transloco": "^4.3.0",
     "@stomp/stompjs": "^7.0.0",
     "net": "^1.0.2",

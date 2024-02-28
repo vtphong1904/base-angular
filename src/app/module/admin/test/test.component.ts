@@ -9,6 +9,7 @@ import {AbstractControl, FormArray, ValidatorFn, Validators} from '@angular/form
 import {WebsocketUtil} from '@shared/websocket-util';
 import {WebsocketService} from '@shared/services/websocket.service';
 import {WebSocketSubject} from 'rxjs/internal/observable/dom/WebSocketSubject';
+import {SocketStompService} from "@shared/services/socket-stomp.service";
 
 @Component({
     selector: 'app-test',
@@ -28,7 +29,7 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
 
     override pagination: IPagination = {
         page: 0,
-        size: 10,
+        size: 5,
         total: 0,
         isShow: true
     }
@@ -58,7 +59,7 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
 
     dataSocket: any;
 
-    constructor(injector: Injector, private testService: TestService, private _translocoService: TranslocoService, private websocketService: WebsocketService) {
+    constructor(injector: Injector, private testService: TestService, private _translocoService: TranslocoService) {
         super(injector, testService);
     }
 
@@ -101,9 +102,14 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
 
-    addOrEdit(row: any): void {
+    addOrEdit(row?: any): void {
         console.log(row);
-        this.showDialog(AddOrEditComponent, {}, (value: any) => {
+        this.showDialog(AddOrEditComponent, {
+          data: {
+            detail: row
+          },
+          width: '392px'
+        }, (value: any) => {
             if (value) {
                 this.getAll();
             }
@@ -125,16 +131,21 @@ export class TestComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
     connectSocket() {
-        this.websocketService.connect();
+      this.dataSocket = new SocketStompService();
+      // this.stompSocketService.sendMessage({'type': 'subscribe', 'symbol': 'BINANCE:BTCUSDT'});
+      this.dataSocket.subscribe({'type': 'subscribe', 'symbol': 'BINANCE:BTCUSDT'}, (message: any) => {
+        console.log(message)
+      });
+       /* this.websocketService.connect();
         this.websocketService.getMessages()?.subscribe(res => {
             if(res.type = 'trade'){
                 this.dataSocket = res.data;
             }
-        })
+        })*/
     }
 
     disConnectSocket() {
-        this.websocketService.disConnect();
+        // this.websocketService.disConnect();
     }
 }
 

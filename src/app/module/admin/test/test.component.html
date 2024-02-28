@@ -1,3 +1,4 @@
+<!--
 <ng-container *transloco="let t">
   <p class="text-3xl font-bold underline">
     {{t('title')}}
@@ -31,6 +32,8 @@
       </ng-container>
     </ng-template>
   </app-data-table>
+
+  &lt;!&ndash;Test formArray angular&ndash;&gt;
 
   <div class="form p-4" [formGroup]="testForm">
     <div class="formArray" formArrayName="configs"
@@ -68,3 +71,33 @@
 
 
 
+-->
+
+
+<ng-container *transloco="let t">
+  <div class="w-full h-full">
+    <div class="w-full">
+      <button mat-stroked-button color="primary" class="w-1/12" (click)="addOrEdit()">Add
+      </button>
+    </div>
+    <app-data-table
+      [rows]="listItem | slice: pagination.size * pagination.page : pagination.size * (pagination.page + 1)"
+      [columns]="columns"
+      [pagination]="pagination"
+      [rowTemplate]="rowTemplate"
+      (pageChange)="changePage($event)">
+      <ng-template #rowTemplate let-row="row" let-column="column">
+        <ng-container [ngSwitch]="column.columnDef">
+          <ng-container *ngSwitchCase="'action'">
+            <button mat-stroked-button color="primary" (click)="addOrEdit(row)">Edit</button>
+            <button mat-stroked-button color="warn" class="ml-2" (click)="delete(row)">Delete</button>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <app-td-table-default
+              [text]="column.cellRenderer ? column.cellRenderer(row) : row[column.columnDef]"></app-td-table-default>
+          </ng-container>
+        </ng-container>
+      </ng-template>
+    </app-data-table>
+  </div>
+</ng-container>
